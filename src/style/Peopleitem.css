@@ -1,0 +1,29 @@
+
+.container-people-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  margin: 0.25rem 0;
+}
+
+p {
+  margin: 0.25rem 0;
+  color: #828282;
+}
+
+.btn-arrow {
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.arrow-svg {
+  font-size: 20px;
+}
+
