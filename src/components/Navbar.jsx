@@ -2,10 +2,10 @@ import React from 'react';
 import '../style/normalize.css'
 import '../style/Navbar.css'
 
-export function Navbar() {
+export function Navbar({titulo}) {
     return (
         <div className='container-nav-people'>
-            <h2 className='title'>People of Star Wars</h2>
+            <h2 className='title'>{titulo}</h2>
         </div>
     )
 }

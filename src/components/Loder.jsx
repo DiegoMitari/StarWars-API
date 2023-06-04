@@ -1,8 +1,7 @@
 import React from 'react';
 import '../style/loader.css'
 
-
-const Loader = () => {
+export function Loader() {
   return (
     <div className="loader">
       <div className="lds-spinner"></div>
@@ -10,5 +9,3 @@ const Loader = () => {
     </div>
   );
 };
-
-export default Loader;

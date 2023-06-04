@@ -1,12 +1,11 @@
 import React from 'react'
-import { Navbar } from './components/Navbar'
+//import { Navbar } from './components/Navbar'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Navbar></Navbar>
     <App />
   </React.StrictMode>,
 )
