@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import * as API from './services/utils';
 import { PeopleItem } from './components/PeopleItem';
-import { Navbar} from './components/Navbar'
+import { TraitsPeople } from './components/TraitsPeople';
+import { Navbar} from './components/Navbar';
 import './style/loader.css'
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [peoples, setPeoples] = useState([]);
-  const [titulo, setTitulo] = useState(true);
 
   useEffect(() => {
     API.getAllPeople()
@@ -17,24 +17,23 @@ function App() {
       })
       .catch((error) => {
         console.error(error);
-        setTitulo(false)
       });
   }, []);
 
   return (
     <div>
       <Navbar titulo={loading ? 'People of Star Wars' : 'People'} />
-      {loading ? (      
+      {loading ? (
         <div className="loader">
-        
           <div className="lds-spinner"></div>
           <div className="loader-text">Cargando...</div>
         </div>
-        ) : ( peoples?(
+        ) : ( peoples ? (
           <div>
             {peoples.map((item) => (
-              <PeopleItem {...item} key={item.name} />
-            ))}
+              <PeopleItem {...item} key={item.name}>
+              </PeopleItem>
+              ))}
           </div>
         ):(
           <div>
@@ -45,16 +44,6 @@ function App() {
       }
     </div>
   );
-  
-  function getTitle() {
-    if (loading) {
-      return 'Cargando...';
-    } else if (peoples.length > 0) {
-      return 'Datos Cargados';
-    } else {
-      return 'Error al Cargar los Datos';
-    }
-  }
 }
 
 
