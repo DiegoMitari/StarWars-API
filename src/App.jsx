@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import * as API from './services/utils';
-import { PeopleItem } from './components/PeopleItem';
-import { Navbar} from './components/Navbar'
-import './style/loader.css'
+import { PeopleItem, getCharacterInfo } from './components/PeopleItem';
+import { Navbar } from './components/Navbar';
+import './style/loader.css';
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [peoples, setPeoples] = useState([]);
-  const [titulo, setTitulo] = useState(true);
+  const [error, setError] = useState(false);
+  const [characterInfo, setCharacterInfo] = useState(null);
 
   useEffect(() => {
     API.getAllPeople()
@@ -17,46 +18,62 @@ function App() {
       })
       .catch((error) => {
         console.error(error);
-        setTitulo(false)
+        setError(true);
+        setLoading(false);
       });
   }, []);
 
+  const handleCharacterClick = async (people) => {
+    setLoading(true);
+    try {
+      const info = await getCharacterInfo(people.url);
+      setCharacterInfo(info);
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
+  };
+
   return (
     <div>
-      <Navbar titulo={loading ? 'People of Star Wars' : 'People'} />
-      {loading ? (      
+      <Navbar titulo={loading ? '' : 'People'} />
+      {loading ? (
         <div className="loader">
-        
           <div className="lds-spinner"></div>
           <div className="loader-text">Cargando...</div>
         </div>
-        ) : ( peoples?(
-          <div>
-            {peoples.map((item) => (
-              <PeopleItem {...item} key={item.name} />
-            ))}
-          </div>
-        ):(
-          <div>
-            <h1>Failed to Load Data</h1>
-          </div>
-        )
-         )
-      }
+      ) : (
+        <>
+          {error ? (
+            <div>
+              <h1>Failed to Load Data</h1>
+            </div>
+          ) : (
+            <div>
+              {peoples.map((item) => (
+                <PeopleItem
+                  {...item}
+                  key={item.name}
+                  onClick={() => handleCharacterClick(item)}
+                />
+              ))}
+            </div>
+          )}
+          {characterInfo && (
+            <div>
+              <h3>Character Information</h3>
+              <ul>
+                <li>Name: {characterInfo.name}</li>
+                <li>Gender: {characterInfo.gender}</li>
+                <li>Homeworld: {characterInfo.homeworld}</li>
+                <li>Species: {characterInfo.species}</li>
+              </ul>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
-  
-  function getTitle() {
-    if (loading) {
-      return 'Cargando...';
-    } else if (peoples.length > 0) {
-      return 'Datos Cargados';
-    } else {
-      return 'Error al Cargar los Datos';
-    }
-  }
 }
 
-
-export default App;
-
+export default App

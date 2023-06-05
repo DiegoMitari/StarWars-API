@@ -1,7 +1,6 @@
 const API_URL = 'https://swapi.dev/api/people/';
 
-export async function getAllPeople() {
-  try {
+export async function getAllPeople() { try {
     const response = await fetch(API_URL);
       // Capturar y manejar el error de la API aquí
       if (response.status !== 200) {
@@ -15,3 +14,4 @@ export async function getAllPeople() {
     console.error(error);
   }
 }
+
